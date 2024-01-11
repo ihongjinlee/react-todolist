@@ -33,6 +33,8 @@ function todoReducer(state, action) {
       );
     case 'REMOVE':
       return state.filter((todo) => todo.id !== action.id);
+    case 'UPDATE_ALL':
+      return [...action.todos];
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
   }
@@ -41,16 +43,25 @@ function todoReducer(state, action) {
 const TodoStateContext = createContext();
 const TodoDispatchContext = createContext();
 const TodoNextIdContext = createContext();
+const TodoDragIdContext = createContext();
+const TodoDragOverIdContext = createContext();
 
 export function TodoProvider({ children }) {
   const [state, dispatch] = useReducer(todoReducer, initialTodos);
   const nextId = useRef(5);
 
+  const dragId = useRef(0);
+  const dragOverId = useRef(0);
+
   return (
     <TodoStateContext.Provider value={state}>
       <TodoDispatchContext.Provider value={dispatch}>
         <TodoNextIdContext.Provider value={nextId}>
-          {children}
+          <TodoDragIdContext.Provider value={dragId}>
+            <TodoDragOverIdContext.Provider value={dragOverId}>
+              {children}
+            </TodoDragOverIdContext.Provider>
+          </TodoDragIdContext.Provider>
         </TodoNextIdContext.Provider>
       </TodoDispatchContext.Provider>
     </TodoStateContext.Provider>
@@ -77,6 +88,22 @@ export function useTodoNextId() {
   const context = useContext(TodoNextIdContext);
   if (!context) {
     throw new Error('Cannot find TodoNextIdContext.Provider');
+  }
+  return context;
+}
+
+export function useTodoDragId() {
+  const context = useContext(TodoDragIdContext);
+  if (!context) {
+    throw new Error('Cannot find TodoDragIdContext.Provider');
+  }
+  return context;
+}
+
+export function useTodoDragOverId() {
+  const context = useContext(TodoDragOverIdContext);
+  if (!context) {
+    throw new Error('Cannot find TodoDragOverIdContext.Provider');
   }
   return context;
 }
