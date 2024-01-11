@@ -14,8 +14,8 @@ function TodoList() {
 
   return (
     <TodoListBlock>
-      {todos.map(({ key, text, done }) => (
-        <TodoItem key={key} text={text} done={done} />
+      {todos.map(({ id, text, done }) => (
+        <TodoItem key={id} id={id} text={text} done={done} />
       ))}
     </TodoListBlock>
   );
