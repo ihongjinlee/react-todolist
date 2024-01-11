@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 import { MdDone, MdDelete } from 'react-icons/md';
 import { useTodoDispatch } from './TodoContext';
+import React from 'react';
 
 const Remove = styled.div`
   display: flex;
@@ -75,4 +76,4 @@ function TodoItem({ id, done, text }) {
   );
 }
 
-export default TodoItem;
+export default React.memo(TodoItem);
