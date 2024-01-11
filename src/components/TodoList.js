@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import TodoItem from './TodoItem';
+import { useTodoState } from './TodoContext';
 
 const TodoListBlock = styled.div`
   flex: 1;
@@ -9,12 +10,13 @@ const TodoListBlock = styled.div`
 `;
 
 function TodoList() {
+  const todos = useTodoState();
+
   return (
     <TodoListBlock>
-      <TodoItem text="할 일 하나" done={true} />
-      <TodoItem text="할 일 둘" done={true} />
-      <TodoItem text="할 일 셋" done={false} />
-      <TodoItem text="할 일 넷" done={false} />
+      {todos.map(({ key, text, done }) => (
+        <TodoItem key={key} text={text} done={done} />
+      ))}
     </TodoListBlock>
   );
 }
