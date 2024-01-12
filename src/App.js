@@ -4,6 +4,8 @@ import TodoHead from './components/TodoHead';
 import TodoList from './components/TodoList';
 import TodoCreate from './components/TodoCreate';
 import { TodoProvider } from './components/TodoContext';
+import { StyleSheetManager } from 'styled-components';
+import isPropValid from '@emotion/is-prop-valid';
 
 const GlobalStyle = createGlobalStyle`
   body{
@@ -14,12 +16,14 @@ const GlobalStyle = createGlobalStyle`
 function App() {
   return (
     <TodoProvider>
-      <GlobalStyle />
-      <TodoTemplate>
-        <TodoHead />
-        <TodoList />
-        <TodoCreate />
-      </TodoTemplate>
+      <StyleSheetManager shouldForwardProp={(prop) => isPropValid(prop)}>
+        <GlobalStyle />
+        <TodoTemplate>
+          <TodoHead />
+          <TodoList />
+          <TodoCreate />
+        </TodoTemplate>
+      </StyleSheetManager>
     </TodoProvider>
   );
 }
