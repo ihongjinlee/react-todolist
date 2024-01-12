@@ -1,7 +1,23 @@
+// https://react-icons.github.io/react-icons/
+
 import styled, { css } from 'styled-components';
 import { MdDone, MdDelete } from 'react-icons/md';
+import { FaPencil } from 'react-icons/fa6';
 import { useTodoDispatch } from './TodoContext';
 import React from 'react';
+
+const Update = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #dee2e6;
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0;
+  &:hover {
+    color: #f1a52c;
+  }
+`;
 
 const Remove = styled.div`
   display: flex;
@@ -22,6 +38,10 @@ const TodoItemBlock = styled.div`
   padding-top: 12px;
   padding-bottom: 12px;
   &:hover {
+    ${Update} {
+      opacity: 1;
+    }
+
     ${Remove} {
       opacity: 1;
     }
@@ -69,6 +89,9 @@ function TodoItem({ id, done, text }) {
         {done && <MdDone />}
       </CheckCircle>
       <Text done={done}>{text}</Text>
+      <Update>
+        <FaPencil />
+      </Update>
       <Remove onClick={onRemove}>
         <MdDelete />
       </Remove>
